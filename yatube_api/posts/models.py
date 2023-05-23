@@ -65,12 +65,12 @@ class Follow(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='followers'
+        related_name='follower'
     )
     following = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="following_users"
+        related_name="following"
     )
 
     def __str__(self):
