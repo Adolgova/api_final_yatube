@@ -4,7 +4,9 @@ from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .permissions import IsOwnerOrReadOnly
-from .serializers import (CommentSerializer, FollowSerializer, GroupSerializer,
+from .serializers import (CommentSerializer,
+                          FollowSerializer,
+                          GroupSerializer,
                           PostSerializer)
 from .mixin import CreateListViewSet
 from posts.models import Group, Post
