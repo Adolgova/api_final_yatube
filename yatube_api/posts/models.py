@@ -9,12 +9,12 @@ class Group(models.Model):
     slug = models.SlugField(unique=True)
     description = models.TextField()
 
-    def __str__(self):
-        return self.title
-
     class Meta:
         verbose_name = 'группа'
         verbose_name_plural = 'группы'
+
+    def __str__(self):
+        return self.title
 
 
 class Post(models.Model):
@@ -35,12 +35,12 @@ class Post(models.Model):
         related_name='posts'
     )
 
-    def __str__(self):
-        return f'{self.text[:100]}...' if len(self.text) > 100 else self.text
-
     class Meta:
         verbose_name = 'пост'
         verbose_name_plural = 'посты'
+
+    def __str__(self):
+        return self.text[:15]
 
 
 class Comment(models.Model):
@@ -53,12 +53,13 @@ class Comment(models.Model):
     created = models.DateTimeField(
         'Дата добавления', auto_now_add=True, db_index=True)
 
-    def __str__(self):
-        return f'{self.text[:50]} ({self.created.strftime("%d.%m.%Y %H:%M")})'
-
     class Meta:
+        ordering = ["created"]
         verbose_name = 'коммент'
         verbose_name_plural = 'комменты'
+
+    def __str__(self):
+        return f'{self.text[:50]} ({self.created.strftime("%d.%m.%Y %H:%M")})'
 
 
 class Follow(models.Model):
@@ -73,9 +74,6 @@ class Follow(models.Model):
         related_name="following"
     )
 
-    def __str__(self):
-        return f'{self.user.username} follows {self.following.username}'
-
     class Meta:
         constraints = [
             models.UniqueConstraint(
@@ -83,3 +81,6 @@ class Follow(models.Model):
                 name='follow'
             )
         ]
+
+    def __str__(self):
+        return f'{self.user.username} follows {self.following.username}'
